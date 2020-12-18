@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
@@ -13,6 +14,10 @@ export default function Home() {
           jiroor
         </h1>
       </main>
+
+      <Link href='/recognition'>
+        Recognition
+      </Link>
     </div>
   )
 }
