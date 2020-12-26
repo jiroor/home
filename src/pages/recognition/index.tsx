@@ -1,24 +1,21 @@
 import { useCallback, useEffect, useState } from 'react'
 import Head from 'next/head'
 import styles from '../../styles/Recognition.module.css'
-import { useSpeechRecognition } from '../../hooks/Recognition'
+import { useRecognition } from '../../hooks/Recognition'
 
 export default function Recognition() {
-  const recognition = useSpeechRecognition();
+  const recognition = useRecognition();
   const [text, setText] = useState('');
   const handleResult = useCallback((event: SpeechRecognitionEvent) => {
-    const { results, resultIndex } = event;
-    Array.from(results)
-      .slice(resultIndex)
-      // .filter((result) => result.isFinal)
-      .forEach((result) => {
-        setText(result.item(0).transcript);
-        console.log(result.item(0).transcript);
-      })
+    const transcript = recognition.getTranscript(event);
+    setText(transcript);
+    console.log(transcript);
+
+    recognition.restart();
   }, [recognition]);
 
   useEffect(() => {
-    recognition.onresult = handleResult;
+    recognition.onResult(handleResult);
     recognition.start();
 
     return () => {
