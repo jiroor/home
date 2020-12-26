@@ -7,11 +7,13 @@ export default function Recognition() {
   const recognition = useRecognition();
   const [text, setText] = useState('');
   const handleResult = useCallback((event: SpeechRecognitionEvent) => {
-    const transcript = recognition.getTranscript(event);
+    const { transcript, isFinal } = recognition.getResult(event);
     setText(transcript);
     console.log(transcript);
 
-    recognition.restart();
+    if (isFinal) {
+      recognition.restart();
+    }
   }, [recognition]);
 
   useEffect(() => {

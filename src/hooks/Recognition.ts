@@ -40,13 +40,16 @@ class Recognition {
     this.recognition.onresult = onresult;
   }
 
-  getTranscript(event: SpeechRecognitionEvent) {
+  getResult(event: SpeechRecognitionEvent) {
     const { results, resultIndex } = event;
-    return Array.from(results)
+    const result = Array.from(results)
       .slice(resultIndex)
-      // .filter((result) => result.isFinal)
-      .reduce((res, result) => [...res, result.item(0).transcript], <string[]>[])
       .shift();
+
+    return {
+      transcript: result.item(0).transcript,
+      isFinal: result.isFinal
+    };
   }
 }
 
