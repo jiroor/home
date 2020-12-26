@@ -9,7 +9,7 @@ export function useSpeechRecognition() {
     : DummySpeechRecognition;
 
   const [recognition] = useState(new SpeechRecognition());
-  recognition.lang = 'jp';
+  recognition.lang = 'ja';
   recognition.interimResults = true;
   recognition.continuous = true;
   return recognition;
