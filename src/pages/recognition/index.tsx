@@ -26,14 +26,24 @@ export default function Recognition() {
     const { transcript, isFinal } = getResult(event);
     const text = isFinal ? transcript : `[${transcript}]`;
     setText(text);
+    console.log('onresult', text);
   }, [recognition]);
+  const handleStart = useCallback(() => {
+    console.log('onstart');
+  }, []);
   const handleEnd = useCallback(() => {
     recognition.start();
+    console.log('onend');
   }, [recognition]);
+  const handleError = useCallback((event: ErrorEvent) => {
+    console.error(event);
+  }, []);
 
   useEffect(() => {
     recognition.onresult = handleResult;
+    recognition.onstart = handleStart;
     recognition.onend = handleEnd;
+    recognition.onerror = handleError;
     recognition.start();
 
     return () => {
