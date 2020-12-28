@@ -3,21 +3,35 @@ import Head from 'next/head'
 import styles from '../../styles/Recognition.module.css'
 import { useRecognition } from '../../hooks/Recognition'
 
+const getResult = (event: SpeechRecognitionEvent) => {
+  const { results, resultIndex } = event;
+  const result = Array.from(results)
+    .slice(resultIndex)
+    .shift();
+
+  return {
+    transcript: result.item(0).transcript,
+    isFinal: result.isFinal
+  };
+};
+
+
 export default function Recognition() {
   const recognition = useRecognition();
   const [text, setText] = useState('');
-  const handleResult = useCallback((event: SpeechRecognitionEvent) => {
-    const { transcript, isFinal } = recognition.getResult(event);
-    setText(transcript);
-    console.log(transcript);
 
-    if (isFinal) {
-      recognition.restart();
-    }
+  const handleResult = useCallback((event: SpeechRecognitionEvent) => {
+    const { transcript, isFinal } = getResult(event);
+    const text = isFinal ? transcript : `[${transcript}]`;
+    setText(text);
+  }, [recognition]);
+  const handleEnd = useCallback(() => {
+    recognition.start();
   }, [recognition]);
 
   useEffect(() => {
-    recognition.onResult(handleResult);
+    recognition.onresult = handleResult;
+    recognition.onend = handleEnd;
     recognition.start();
 
     return () => {
