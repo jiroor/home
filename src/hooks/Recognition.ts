@@ -11,6 +11,5 @@ export function useRecognition() {
   const [recognition] = useState(new SpeechRecognition());
   recognition.lang = 'ja';
   recognition.interimResults = true;
-  recognition.continuous = true;
   return recognition;
 }
