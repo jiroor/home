@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { FormEvent, useCallback, useEffect, useState } from 'react'
 import Head from 'next/head'
 import styles from '../../styles/Recognition.module.css'
 import { useRecognition } from '../../hooks/Recognition'
@@ -19,6 +19,8 @@ const getResult = (event: SpeechRecognitionEvent) => {
 export default function Recognition() {
   const recognition = useRecognition();
   const [text, setText] = useState('');
+  const [fontSize, setFontSize] = useState('14');
+  const [color, setColor] = useState('#000000');
 
   const handleResult = useCallback((event: SpeechRecognitionEvent) => {
     const { transcript, isFinal } = getResult(event);
@@ -39,6 +41,20 @@ export default function Recognition() {
     };
   }, [recognition]);
 
+  const handleInputFontSize = useCallback((event: FormEvent<HTMLInputElement>) => {
+    const { value } = (event.target as HTMLInputElement);
+    setFontSize(value);
+  }, []);
+  const handleInputColor = useCallback((event: FormEvent<HTMLInputElement>) => {
+    const { value } = (event.target as HTMLInputElement);
+    setColor(value);
+  }, []);
+
+  const textStyle: React.CSSProperties = {
+    fontSize: `${fontSize}px`,
+    color
+  };
+
   return (
     <div>
       <Head>
@@ -50,9 +66,20 @@ export default function Recognition() {
           recognition
         </h1>
 
-        <div>
+        <div style={textStyle}>
           {text}
         </div>
+
+        <input
+          type='number'
+          className={styles.inputText}
+          value={fontSize}
+          onChange={handleInputFontSize} />
+        <input
+          type='color'
+          className={styles.inputColor}
+          value={color}
+          onInput={handleInputColor} />
       </main>
     </div>
   )
