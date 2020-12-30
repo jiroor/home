@@ -17,3 +17,17 @@
   width: 300px;
   height: 64px;
 }
+
+.textContainer {
+  position: relative;
+}
+.textStroke {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.text {
+  position: relative;
+}

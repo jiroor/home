@@ -24,10 +24,11 @@ enum TextAlign {
 export default function Recognition() {
   const recognition = useRecognition();
   const [text, setText] = useState('');
-  const [fontSize, setFontSize] = useState('14');
+  const [fontSize, setFontSize] = useState(14);
   const [fontWeight, setFontWeight] = useState(600);
   const [color, setColor] = useState('#000000');
   const [textAlign, setTextAlign] = useState(TextAlign.Left);
+  const [textStrokeWidth, setTextStrokeWidth] = useState(3);
 
   const handleResult = useCallback((event: SpeechRecognitionEvent) => {
     const { transcript, isFinal } = getResult(event);
@@ -60,7 +61,7 @@ export default function Recognition() {
 
   const handleInputFontSize = useCallback((event: FormEvent<HTMLInputElement>) => {
     const { value } = (event.target as HTMLInputElement);
-    setFontSize(value);
+    setFontSize(Number(value));
   }, []);
   const handleInputFontWeight = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
     const { value } = event.target;
@@ -74,12 +75,19 @@ export default function Recognition() {
     const { value } = event.target;
     setTextAlign(value as TextAlign);
   }, []);
+  const handleInputTextStrokeWidth = useCallback((event: FormEvent<HTMLInputElement>) => {
+    const { value } = (event.target as HTMLInputElement);
+    setTextStrokeWidth(Number(value));
+  }, []);
 
   const textStyle: React.CSSProperties = {
     fontSize: `${fontSize}px`,
     fontWeight,
     color,
     textAlign
+  };
+  const textStrokeStyle: React.CSSProperties = {
+    WebkitTextStrokeWidth: `${textStrokeWidth * 2}px`
   };
 
   const radios = Object
@@ -113,8 +121,18 @@ export default function Recognition() {
           recognition
         </h1>
 
-        <div style={textStyle}>
-          {text}
+        <div
+          className={styles.textContainer}>
+          <div
+            style={{ ...textStyle, ...textStrokeStyle }}
+            className={styles.textStroke}>
+            {text}
+          </div>
+          <div
+            style={textStyle}
+            className={styles.text}>
+            {text}
+          </div>
         </div>
 
         <input
@@ -140,6 +158,11 @@ export default function Recognition() {
             太字
           </option>
         </select>
+        <input
+          type='number'
+          className={styles.inputText}
+          value={textStrokeWidth}
+          onChange={handleInputTextStrokeWidth} />
       </main>
     </div>
   )
