@@ -25,6 +25,7 @@ export default function Recognition() {
   const recognition = useRecognition();
   const [text, setText] = useState('');
   const [fontSize, setFontSize] = useState('14');
+  const [fontWeight, setFontWeight] = useState(600);
   const [color, setColor] = useState('#000000');
   const [textAlign, setTextAlign] = useState(TextAlign.Left);
 
@@ -61,17 +62,22 @@ export default function Recognition() {
     const { value } = (event.target as HTMLInputElement);
     setFontSize(value);
   }, []);
+  const handleInputFontWeight = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
+    const { value } = event.target;
+    setFontWeight(Number(value));
+  }, []);
   const handleInputColor = useCallback((event: FormEvent<HTMLInputElement>) => {
     const { value } = (event.target as HTMLInputElement);
     setColor(value);
   }, []);
   const handleInputTextAlign = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    const { value } = (event.target as HTMLInputElement);
+    const { value } = event.target;
     setTextAlign(value as TextAlign);
   }, []);
 
   const textStyle: React.CSSProperties = {
     fontSize: `${fontSize}px`,
+    fontWeight,
     color,
     textAlign
   };
@@ -122,6 +128,18 @@ export default function Recognition() {
           value={color}
           onInput={handleInputColor} />
         {radios}
+        <select
+          value={fontWeight}
+          onChange={handleInputFontWeight}>
+          <option
+            value={300}>
+            通常
+          </option>
+          <option
+            value={600}>
+            太字
+          </option>
+        </select>
       </main>
     </div>
   )
