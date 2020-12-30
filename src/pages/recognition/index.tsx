@@ -98,19 +98,20 @@ export default function Recognition() {
 
   const radios = Object
     .values(TextAlign)
-    .map((textAlign: TextAlign) => {
-      const id = `textAlign_${textAlign}`;
+    .map((textAlignValue: TextAlign) => {
+      const id = `textAlign_${textAlignValue}`;
       return (
         <div>
           <input
             type='radio'
             id={id}
             name='textAlign'
-            value={textAlign}
+            value={textAlignValue}
+            checked={textAlign === textAlignValue}
             onChange={handleInputTextAlign} />
           <label
             htmlFor={id}>
-            {textAlign}
+            {textAlignValue}
           </label>
         </div>
       );
