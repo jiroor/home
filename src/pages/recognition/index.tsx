@@ -26,9 +26,10 @@ export default function Recognition() {
   const [text, setText] = useState('');
   const [fontSize, setFontSize] = useState(14);
   const [fontWeight, setFontWeight] = useState(600);
-  const [color, setColor] = useState('#000000');
-  const [textAlign, setTextAlign] = useState(TextAlign.Left);
+  const [color, setColor] = useState('#ffffff');
+  const [textAlign, setTextAlign] = useState(TextAlign.Center);
   const [textStrokeWidth, setTextStrokeWidth] = useState(3);
+  const [textStrokeColor, setTextStrokeColor] = useState('#000000');
 
   const handleResult = useCallback((event: SpeechRecognitionEvent) => {
     const { transcript, isFinal } = getResult(event);
@@ -79,6 +80,10 @@ export default function Recognition() {
     const { value } = (event.target as HTMLInputElement);
     setTextStrokeWidth(Number(value));
   }, []);
+  const handleInputTextStrokeColor = useCallback((event: FormEvent<HTMLInputElement>) => {
+    const { value } = (event.target as HTMLInputElement);
+    setTextStrokeColor(value);
+  }, []);
 
   const textStyle: React.CSSProperties = {
     fontSize: `${fontSize}px`,
@@ -87,7 +92,8 @@ export default function Recognition() {
     textAlign
   };
   const textStrokeStyle: React.CSSProperties = {
-    WebkitTextStrokeWidth: `${textStrokeWidth * 2}px`
+    WebkitTextStrokeWidth: `${textStrokeWidth * 2}px`,
+    WebkitTextStrokeColor: textStrokeColor
   };
 
   const radios = Object
@@ -163,6 +169,11 @@ export default function Recognition() {
           className={styles.inputText}
           value={textStrokeWidth}
           onChange={handleInputTextStrokeWidth} />
+        <input
+          type='color'
+          className={styles.inputColor}
+          value={textStrokeColor}
+          onInput={handleInputTextStrokeColor} />
       </main>
     </div>
   )
