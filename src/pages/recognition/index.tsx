@@ -30,6 +30,7 @@ export default function Recognition() {
   const [textAlign, setTextAlign] = useState(TextAlign.Center);
   const [textStrokeWidth, setTextStrokeWidth] = useState(3);
   const [textStrokeColor, setTextStrokeColor] = useState('#000000');
+  const [backgroundColor, setBackgroundColor] = useState('#ffffff');
 
   const handleResult = useCallback((event: SpeechRecognitionEvent) => {
     const { transcript, isFinal } = getResult(event);
@@ -84,7 +85,14 @@ export default function Recognition() {
     const { value } = (event.target as HTMLInputElement);
     setTextStrokeColor(value);
   }, []);
+  const handleInputBackgroundColor = useCallback((event: FormEvent<HTMLInputElement>) => {
+    const { value } = (event.target as HTMLInputElement);
+    setBackgroundColor(value);
+  }, []);
 
+  const textContainerStyle: React.CSSProperties = {
+    backgroundColor
+  };
   const textStyle: React.CSSProperties = {
     fontSize: `${fontSize}px`,
     fontWeight,
@@ -129,15 +137,16 @@ export default function Recognition() {
         </h1>
 
         <div
-          className={styles.textContainer}>
+          className={styles.textContainer}
+          style={textContainerStyle}>
           <div
-            style={{ ...textStyle, ...textStrokeStyle }}
-            className={styles.textStroke}>
+            className={styles.textStroke}
+            style={{ ...textStyle, ...textStrokeStyle }}>
             {text}
           </div>
           <div
-            style={textStyle}
-            className={styles.text}>
+            className={styles.text}
+            style={textStyle}>
             {text}
           </div>
         </div>
@@ -175,6 +184,11 @@ export default function Recognition() {
           className={styles.inputColor}
           value={textStrokeColor}
           onInput={handleInputTextStrokeColor} />
+        <input
+          type='color'
+          className={styles.inputColor}
+          value={backgroundColor}
+          onInput={handleInputBackgroundColor} />
       </main>
     </div>
   )
