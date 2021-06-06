@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+
+import NumberEasing from './NumberEasing'
 import styles from '../../styles/Advantage.module.css'
 
 interface Vote {
@@ -93,7 +95,11 @@ export default function Advantage() {
         style={{
           [index === 0 ? 'left' : 'right']: 0
         }}>
-        {vote.voteRate}%
+        <NumberEasing
+          value={vote.voteRate}
+          speed={300}
+          decimals={0}
+          ease='quintOut' />%
       </div>
     ))
 
