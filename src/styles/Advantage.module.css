@@ -1,0 +1,34 @@
+.container {
+  position: relative;
+  height: 100vh;
+  background: #00ff00;
+}
+
+.progress {
+  display: flex;
+  align-items: stretch;
+  height: 50px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.progressTrack {
+  transition: all ease-out 0.3s;
+}
+
+.rates {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: stretch;
+  line-height: 50px;
+  font-size: 36px;
+  font-weight: 600;
+  color: #fff;
+}
+.rate {
+  position: absolute;
+  padding: 0 8px;
+}
