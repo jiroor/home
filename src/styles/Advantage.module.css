@@ -1,15 +1,30 @@
 .container {
-  position: relative;
   height: 100vh;
   background: #00ff00;
 }
 
+.advantage {
+  position: relative;
+  height: 50px;
+}
+
 .progress {
+  position: relative;
   display: flex;
   align-items: stretch;
-  height: 50px;
-  border-radius: 8px;
+  height: 100%;
+  border-radius: 16px;
   overflow: hidden;
+}
+.progress::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3));
 }
 .progressTrack {
   transition: all ease-out 0.3s;
@@ -27,6 +42,7 @@
   font-size: 36px;
   font-weight: 600;
   color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Arial, ヒラギノ角ゴ ProN W3, Hiragino Kaku Gothic ProN, メイリオ, Meiryo, sans-serif;
 }
 .rate {
   position: absolute;

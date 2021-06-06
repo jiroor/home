@@ -105,11 +105,13 @@ export default function Advantage() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.progress}>
-        {progressTracks}
-      </div>
-      <div className={styles.rates}>
-        {rates}
+      <div className={styles.advantage}>
+        <div className={styles.progress}>
+          {progressTracks}
+        </div>
+        <div className={styles.rates}>
+          {rates}
+        </div>
       </div>
     </div>
   );
