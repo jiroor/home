@@ -21,8 +21,7 @@ const defaultVote = {
 
 const fetchVotes = (): Promise<Vote[]> => {
   const movieId = location.search.match(/movie_id=([^&]+)/)?.[1];
-  // const url = `https://stg-public.openrec.tv/external/api/v5/ext-vote/polls?movie_id=${movieId}&limit=1&offset=0&latest=true`;
-  const url = `hogehogehoge`;
+  const url = `https://public.openrec.tv/external/api/v5/ext-vote/polls?movie_id=${movieId}&limit=1&offset=0&latest=true`;
 
   return fetch(url)
     .then((res) => res.json())
