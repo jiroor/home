@@ -2,6 +2,7 @@ import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from 'react'
 import Head from 'next/head'
 import styles from '../../styles/Recognition.module.css'
 import { useRecognition } from '../../hooks/Recognition'
+import { noop } from '../../utilities/function'
 
 const getResult = (event: SpeechRecognitionEvent) => {
   const { results, resultIndex } = event;
@@ -57,6 +58,10 @@ export default function Recognition() {
     recognition.start();
 
     return () => {
+      recognition.onresult = noop;
+      recognition.onstart = noop;
+      recognition.onend = noop;
+      recognition.onerror = noop;
       recognition.stop();
     };
   }, [recognition]);
